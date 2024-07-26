@@ -9,10 +9,10 @@ const Home = () => {
    <>
 
 <SideNav/>
-<div className='w-[80%] h-full '>
-  top
+
+
   <TopNav/>
-</div>
+
       
      </>
   )
