@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Horizontal = () => {
+const HorizontalCards = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const Horizontal = () => {
   )
 }
 
-export default Horizontal
+export default HorizontalCards;
