@@ -4,12 +4,14 @@ import TopNav from './templates/TopNav';
 import axios from '../utils/axios';
 import Headers from './templates/Headers';
 import HorizontalCards from './templates/HorizontalCards';
+import DropDown from './templates/DropDown';
 
 const Home = () => {
   document.title="Movie App| Homepage";
 
-  const [wall,setWall]=useState("")
-  const [trending,setTrending]=useState("")
+  const [wall,setWall]=useState(null)
+  const [trending,setTrending]=useState(null)
+  const [category,setCategory]=useState("all");
 
 
   const getWall=async()=>{
@@ -25,7 +27,7 @@ const Home = () => {
   
   const getTrending=async()=>{
     try{
-         const {data}= await axios.get(`/trending/all/day`)
+         const {data}= await axios.get(`/trending/${category}/day`)
 
          setTrending(data.results);      
     }
@@ -35,13 +37,10 @@ const Home = () => {
 
 
   useEffect(()=>{
-
+  getTrending();
   !wall&&getWall();
+   },[category]);
 
-  !trending&&getTrending();
-
-  },[]);
-  console.log(trending)
 
   return wall && trending? (
    <>
@@ -51,6 +50,15 @@ const Home = () => {
 
   <TopNav/>
   <Headers data={wall}/>
+  <div className='flex justify-between'>
+      <h1 className='text-zinc-400 text-2xl font-semibold ml-2 mt-2 '>Trending</h1>
+
+      <DropDown 
+      title="Filter" 
+      option={["tv", "movie", "all"]}
+      func={(e)=>setCategory(e.target.value)}
+       />
+      </div>
   <HorizontalCards data={trending}/>
   </div>
       
