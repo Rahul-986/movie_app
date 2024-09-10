@@ -9,26 +9,46 @@ import Loading from './templates/Loading'
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Trending = () => {
-  const nav=useNavigate()
-  const [category,setCategory]=useState("all")
-  const [duration,setDuration]= useState("day")
-  const [trending,setTrending]=useState([])
-  const [page,setPage]=useState(1)
+  const nav=useNavigate();
+  const [category,setCategory]=useState("all");
+  const [duration,setDuration]= useState("day");
+  const [trending,setTrending]=useState([]);
+  const [page,setPage]=useState(1);
+  const [HasMore,setHasMore]=useState(true)
 
   const getTrending=async()=>{
     try{
-         const {data}= await axios.get(`/trending/${category}/${duration}`)
+         const {data}= await axios.get(`/trending/${category}/${duration}?page=${page}`)
 
          //setTrending(data.results);  
-         setTrending((prevState)=>[...prevState,...data.results]);   
-         setPage(page+1) 
+         if(data.results.length>0){
+           setTrending((prevState)=>[...prevState,...data.results]);   
+           setPage(page+1) 
+
+         }
+         else{
+           setHasMore(false)
+         }
     }
     catch(error){
       console.log("ERROR: " ,error)
     }};
     
-  useEffect(()=>{
+const refreshHandler =()=>{
+  if(trending.length===0){
+   
     getTrending();
+  }
+  else{
+    setPage(1);
+    setTrending([]);
+    getTrending();
+  
+  }
+}
+
+  useEffect(()=>{
+    refreshHandler();
   },[duration,category])
 
   return  trending.length>0? ( 
@@ -57,7 +77,7 @@ const Trending = () => {
       <InfiniteScroll
         dataLength={trending.length}
         next={getTrending}
-        hasMore={true}
+        hasMore={HasMore}
         loader={<h1>loading...</h1>}>
       <Cards data={trending} title={category}/> 
       </InfiniteScroll>
