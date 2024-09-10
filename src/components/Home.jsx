@@ -5,6 +5,7 @@ import axios from '../utils/axios';
 import Headers from './templates/Headers';
 import HorizontalCards from './templates/HorizontalCards';
 import DropDown from './templates/DropDown';
+import Loading from './templates/Loading';
 
 const Home = () => {
   document.title="Movie App| Homepage";
@@ -63,7 +64,7 @@ const Home = () => {
   </div>
       
      </>
-  ):<h1>loading</h1>
+  ):<div><Loading/></div>
 }
 
 export default Home

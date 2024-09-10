@@ -55,7 +55,7 @@ const TopNav = () => {
 
         {!error && searches.length > 0 && (
           <div 
-            className='w-[50%] max-h-[50vh] bg-zinc-200 absolute top-[100%] left-[15%] overflow-auto z-[1200]' 
+            className='w-[50%]  max-h-[50vh] bg-zinc-200 absolute top-[100%] left-[15%] overflow-auto z-[1200]' 
             style={{ position: 'absolute', zIndex: 1200 }}
           >
             {searches.map((s, i) => (

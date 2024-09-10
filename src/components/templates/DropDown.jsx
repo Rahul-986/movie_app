@@ -21,4 +21,4 @@ const DropDown = ({title,option,func}) => {
 }
 
 
-export default DropDown
+export default DropDown;
