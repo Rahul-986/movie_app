@@ -10,17 +10,17 @@ import Loading from './templates/Loading';
 const Tvshows = () => {
   document.title="movie app || Tvshows"
   const nav = useNavigate();  
-  const [category, setCategory] = useState("now_playing");
-  const [movies, setMovies] = useState([]);
+  const [category, setCategory] = useState("airing_today");
+  const [tv, setTv] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  const getMovies = async () => {
+  const getTv = async () => {
     try {
-      const { data } = await axios.get(`/movie/${category}?page=${page}`);
+      const { data } = await axios.get(`/tv/${category}?page=${page}`);
 
       if (data.results.length > 0) {
-        setMovies((prevState) => [...prevState, ...data.results]);
+        setTv((prevState) => [...prevState, ...data.results]);
         setPage((prevPage) => prevPage + 1);
       } else {
         setHasMore(false);
@@ -32,19 +32,46 @@ const Tvshows = () => {
 
   const refreshHandler = () => {
     setPage(1);
-    setMovies([]);
+    setTv([]);
     setHasMore(true); // Reset the "hasMore" state
-    getMovies();
+    getTv();
   };
 
   useEffect(() => {
     refreshHandler();
   }, [category]);
-  return (
-    <div>
-      
+  return tv.length > 0 ? (
+    <div className="w-screen h-screen">
+      <div className="px-[3%] w-full flex items-center justify-between">
+        <h1 className="text-zinc-400 font-semibold text-3xl">
+          <i
+            onClick={() => nav(-1)}  // Correctly use useNavigate here
+            className="hover:text-[#6556CD] ri-arrow-left-line"
+          ></i>
+          TV Shows <small className='text-sm text-zinc-600'> ({category})</small>
+        </h1>
+        <div className="flex items-center w-[80%]">
+          <TopNav />
+          <DropDown
+            title="Category"
+            option={["top_rated", "popular", "on_the_air", "airing_today"]}
+            func={(e) => setCategory(e.target.value)} // Update category
+          />
+        </div>
+      </div>
+
+      <InfiniteScroll
+        dataLength={tv.length}
+        next={getTv}
+        hasMore={hasMore}
+        loader={<h1>loading...</h1>}
+      >
+        <Cards data={tv} title={category} /> {/* Correct data passed */}
+      </InfiniteScroll>
     </div>
-  )
-}
+  ) : (
+    <Loading />
+  );
+};
 
 export default Tvshows
