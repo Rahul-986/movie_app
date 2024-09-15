@@ -64,7 +64,7 @@ const Person = () => {
         hasMore={hasMore}
         loader={<h1>loading...</h1>}
       >
-        <Cards data={person } title={category} /> {/* Correct data passed */}
+        <Cards data={person } title="person "/> {/* Correct data passed */}
       </InfiniteScroll>
     </div>
   ) : (
