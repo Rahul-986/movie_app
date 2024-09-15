@@ -7,21 +7,21 @@ import DropDown from './templates/DropDown';
 import TopNav from './templates/TopNav';
 import Loading from './templates/Loading';
 
-const Popular = () => {
-  document.title = "Movie App | Popular ";
-  const nav = useNavigate();
+const Person = () => {
 
-  const [category, setCategory] = useState("movie");
-  const [popular, setPopular] = useState([]);
+  document.title="movie app || person shows"
+  const nav = useNavigate();  
+  const [category, setCategory] = useState("popular");
+  const [person , setPerson ] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  const getPopular = async () => {
+  const getPerson  = async () => {
     try {
-      const { data } = await axios.get(`${category}/popular?page=${page}`);
+      const { data } = await axios.get(`/person/${category}?page=${page}`);
 
       if (data.results.length > 0) {
-        setPopular((prevState) => [...prevState, ...data.results]);
+        setPerson ((prevState) => [...prevState, ...data.results]);
         setPage((prevPage) => prevPage + 1);
       } else {
         setHasMore(false);
@@ -33,47 +33,42 @@ const Popular = () => {
 
   const refreshHandler = () => {
     setPage(1);
-    setPopular([]);
+    setPerson ([]);
     setHasMore(true); // Reset the "hasMore" state
-    getPopular();
+    getPerson ();
   };
 
   useEffect(() => {
     refreshHandler();
-  }, [category]); // Reset when category changes
+  }, [category]);
 
-  return popular.length > 0 ? (
+  return person .length > 0 ? (
     <div className="w-screen h-screen">
       <div className="px-[3%] w-full flex items-center justify-between">
         <h1 className="text-zinc-400 font-semibold text-3xl">
           <i
-            onClick={() => nav(-1)}
+            onClick={() => nav(-1)}  // Correctly use useNavigate here
             className="hover:text-[#6556CD] ri-arrow-left-line"
           ></i>
-          popular <small className='text-sm text-zinc-600'>({category})</small>
+          People 
         </h1>
         <div className="flex items-center w-[80%]">
           <TopNav />
-          <DropDown
-            title="Category"
-            option={["tv", "movie"]}
-            func={(e) => setCategory(e.target.value)} // Update category
-          />
+         
         </div>
       </div>
 
       <InfiniteScroll
-        dataLength={popular.length}
-        next={getPopular}
+        dataLength={person .length}
+        next={getPerson }
         hasMore={hasMore}
         loader={<h1>loading...</h1>}
       >
-        <Cards data={popular} title={category} />
+        <Cards data={person } title={category} /> {/* Correct data passed */}
       </InfiniteScroll>
     </div>
   ) : (
     <Loading />
   );
 };
-
-export default Popular;
+export default Person

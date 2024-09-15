@@ -57,7 +57,7 @@ const refreshHandler =()=>{
       <div className='px-[3%] w-full flex items-center justify-between  '>
      
         <h1 className='text-zinc-400 font-semibold text-3xl'>
-        <i onClick={()=>nav(-1)} className=" hover:text-[#6556CD] ri-arrow-left-line"></i>Trending</h1>
+        <i onClick={()=>nav(-1)} className=" hover:text-[#6556CD] ri-arrow-left-line"></i>Trending <small className='text-sm text-zinc-600'>({category})</small></h1>
         <div className='flex items-center w-[80%] '>
         <TopNav />
         <DropDown 
