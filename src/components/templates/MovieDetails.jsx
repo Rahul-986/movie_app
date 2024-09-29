@@ -43,8 +43,7 @@ const MovieDetails = ({data}) => {
             src={`https://image.tmdb.org/t/p/original${info.detail.poster_path || info.detail.profile_path}`}
             alt=""
           />
-          
-
+        
           <div className='content ml-[5%] text-white top-0 '>
             <h1 className='font-black text-white text-4xl -mt-6'>  {info.detail.name || info.detail.title || info.detail.original_title || info.detail.original_name}
             <small className='text-zinc-300 text-bold text-lg '>({info.detail.release_date.split("-")[0]})</small>
@@ -80,7 +79,7 @@ const MovieDetails = ({data}) => {
           </div>
          
           </div>
-          {/* part 3availabe on platform */}
+          {/* part 3 availabe on platform */}
           <div className='w-[80%] flex flex-col gap-y-5 mt-10'>
            
             {info.watchprovider && info.watchprovider.flatrate && (
@@ -138,4 +137,4 @@ const MovieDetails = ({data}) => {
   ) :<div> <Loading/></div>
 }
 
-export default MovieDetails
+export default MovieDetails;
