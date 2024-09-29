@@ -8,7 +8,7 @@ const HorizontalCards = ({ data }) => {
         <Link
         to={`/${d.media_type}/details/${d.id}`}
           key={i}
-          className='min-w-[200px] max-w-[220px] bg-zinc-900 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl'
+          className='min-w-[200px] max-w-[220px]  bg-zinc-900 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl'
         >
           <img
             className='w-full h-[180px] object-cover rounded-t-lg'

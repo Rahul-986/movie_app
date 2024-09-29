@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { asyncloadmovie, removemovie } from '../../store/actions/movieActions';
+import HorizontalCards from "../../components/templates/HorizontalCards"
 import Loading from './Loading';
 
 const MovieDetails = ({data}) => {
@@ -15,7 +16,7 @@ const MovieDetails = ({data}) => {
    return ()=>{
     dispatch(removemovie());
    }
-  },[])
+  },[id])
   return info ? (
    <>
    <div  style={{
@@ -25,7 +26,7 @@ const MovieDetails = ({data}) => {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
-         className='w-full h-full px-[10%]'>
+         className='w-screen h-[150vh] px-[10%]'>
 
          {/* part 1 navigation*/}
           <nav className='w-full h-[10vh] flex gap-10 items-center text-lg text-zinc-100'>
@@ -130,8 +131,16 @@ const MovieDetails = ({data}) => {
               ))}
                   
                 </div>)}
-           
-          </div>
+           </div>
+
+             {/*part 4 similar movie and recommdations */}
+
+             <hr className='mt-5 mb-5 border-none h-[1px] bg-zinc-400'/>
+
+             <h1 className=" mt-5 font-bold text-3xl text-white">Recommendations & Similar Stuffs</h1>
+             <HorizontalCards data=  {info.recommendations.length>0 ? info.recommendations : info.similar}/>
+          
+
     </div>
    </>
   ) :<div> <Loading/></div>
