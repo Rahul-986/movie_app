@@ -6,9 +6,9 @@ import Popular from './components/Popular'
 import Movie from './components/Movie'
 import Tvshows from './components/Tvshows'
 import Person from './components/Person'
-import MovieDetails from './components/templates/movieDetails'
-import TvDetails from './components/templates/tvDetails'
-import PersonDetails from './components/templates/personDetails'
+import MovieDetails from './components/templates/MovieDetails'
+import TvDetails from './components/templates/TvDetails'
+import PersonDetails from './components/templates/PersonDetails'
 
 
 const App = () => {
@@ -19,15 +19,15 @@ const App = () => {
           <Route path='/' element={<Home/>} />
           <Route path='/trending' element={<Trending/>} />
           <Route path='/popular' element={<Popular/>} />
-          <Route path='/movie' element={<Movie/>}> 
+          <Route path='/movie' element={<Movie/>}/> 
             <Route path='/movie/details/:id' element={<MovieDetails/>} />
-          </Route>
-          <Route path='/tvshows' element={<Tvshows/>}>
+        
+          <Route path='/tvshows' element={<Tvshows/>}/>
             <Route path='/tvshows/details/:id' element={<TvDetails/>} />
-          </Route>
-          <Route path='/person' element={<Person/>}>
+        
+          <Route path='/person' element={<Person/>}/>
             <Route path='/person/details/:id' element={<PersonDetails />} />
-          </Route>
+          
         </Routes>
       </div>
     </>

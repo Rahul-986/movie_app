@@ -1,10 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const HorizontalCards = ({ data }) => {
   return (
     <div className='w-full flex overflow-x-auto mb-5 space-x-5 p-4'>
       {data.map((d, i) => (
-        <div
+        <Link
+        to={`/${d.media_type}/details/${d.id}`}
           key={i}
           className='min-w-[200px] max-w-[220px] bg-zinc-900 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl'
         >
@@ -22,7 +24,7 @@ const HorizontalCards = ({ data }) => {
               <span className='text-zinc-500 cursor-pointer hover:underline'>more</span>
             </p>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );

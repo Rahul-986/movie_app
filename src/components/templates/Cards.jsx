@@ -5,7 +5,7 @@ const Cards = ({ data, title }) => {
   return (
     <div className='flex flex-wrap justify-center gap-6 p-4 bg-[#1F1E24]'>
       {data.map((c, i) => (
-        <Link
+        <Link to={`/${c.media_type || title}/details/${c.id}`}
           key={i}
           
           className='relative w-[20vw] max-w-[300px] overflow-hidden rounded-lg shadow-lg transition-transform transform hover:scale-105'

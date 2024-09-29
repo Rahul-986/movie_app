@@ -61,7 +61,7 @@ const TopNav = () => {
             {searches.map((s, i) => (
               <Link
                 key={i}
-                to="/some-path" // replace with your actual path
+                to={`/${s.media_type}/details/${s.id}`} // replace with your actual path
                 className="hover:text-black hover:bg-zinc-300 duration-300 bg-zinc-600 font-semibold w-full flex justify-start p-4 border-b-2 text-zinc-300 items-center border-zinc-100"
               >
                 <img
