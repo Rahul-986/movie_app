@@ -43,6 +43,7 @@ const MovieDetails = ({data}) => {
             src={`https://image.tmdb.org/t/p/original${info.detail.poster_path || info.detail.profile_path}`}
             alt=""
           />
+          
 
           <div className='content ml-[5%] text-white top-0 '>
             <h1 className='font-black text-white text-4xl -mt-6'>  {info.detail.name || info.detail.title || info.detail.original_title || info.detail.original_name}
