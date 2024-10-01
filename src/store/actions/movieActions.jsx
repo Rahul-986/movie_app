@@ -9,7 +9,7 @@ try {
   const recommendations= await axios.get(`/movie/${id}/recommendations`);
   const similar = await axios.get(`/movie/${id}/similar`);
   const translations = await axios.get(`/movie/${id}/translations`);
-  const vedios= await axios.get(`/movie/${id}/videos`);
+  const videos= await axios.get(`/movie/${id}/videos`);
   const watchprovider=await axios.get(`/movie/${id}/watch/providers`);
   let ultimatedetail = {
       detail:detail.data,
@@ -17,7 +17,7 @@ try {
       recommendations:recommendations.data.results,
       similar:similar.data.results,
       translations:translations.data.translations.map((t)=>t.english_name),
-      vedios:vedios.data,
+      videos:videos.data,
       watchprovider:watchprovider.data.results.IN,
 
   }
