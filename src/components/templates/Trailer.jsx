@@ -17,23 +17,24 @@ const Trailer = () => {
 
   return (
     <>
-      {/* Only render the video if ytvideo exists and has a valid key */}
-      {ytvideo && ytvideo.key ? (
-        <div className='bg-[rgba(0,0,0,0.9)] z-[100] top-0 left-0 absolute h-screen w-screen flex items-center justify-center'>
-           <Link   onClick={()=>nav(-1)} 
+    
+      <div className='bg-[rgba(0,0,0,0.9)] z-[100] top-0 left-0 absolute h-screen w-screen flex items-center justify-center'>
+      <Link   onClick={()=>nav(-1)} 
            className="absolute right-[5%] top-[5%] text-white text-3xl  hover:text-[#6556CD] ri-close-fill">
             
            </Link>
-          <ReactPlayer
+      {ytvideo ? (
+        <ReactPlayer
           height={600}
           width={1200}
-          url={`https://www.youtube.com/watch?v=${ytvideo.key}`}  controls={true} />
-        </div>
-      ) : (
-        <div className="bg-[rgba(0,0,0,0.9)] z-[100] top-0 left-0 absolute h-screen w-screen flex items-center justify-center">
+          url={`https://www.youtube.com/watch?v=${ytvideo.key}`}  controls={true}
+           />
+        ) : (
+          <div className="bg-[rgba(0,0,0,0.9)] top-0 left-0 h-screen w-screen flex items-center justify-center">
           <p className="text-white">No official trailer available</p>
         </div>
       )}
+      </div>
     </>
   );
 };
