@@ -1,24 +1,25 @@
-import  { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
-import { asyncloadmovie, removemovie } from '../../store/actions/movieActions';
+import { asyncloadtv, removetv } from '../../store/actions/tvActions';
 import HorizontalCards from "../../components/templates/HorizontalCards"
 import Loading from './Loading';
+import noimage from "/noimage.jpg"
 
 
 const TvDetails = () => {
   const {pathname}=useLocation();
- const nav=  useNavigate();
-  const {id} = useParams();
-  const {info} =useSelector((state)=>state.movie)
-  const dispatch = useDispatch();
-  useEffect(()=>{
-   dispatch(asyncloadmovie(id))
-   return ()=>{
-    dispatch(removemovie());
-   }
-  },[id])
-  return info ? (
+  const nav=  useNavigate();
+   const {id} = useParams();
+   const {info} =useSelector((state)=>state.tv)
+   const dispatch = useDispatch();
+   useEffect(()=>{
+    dispatch(asyncloadtv(id))
+    return ()=>{
+     dispatch(removetv());
+    }
+   },[id])
+   return info ? (
     <>
     <div  style={{
            background: `linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.4),rgba(0,0,0,0.6)), 
@@ -27,7 +28,7 @@ const TvDetails = () => {
            backgroundSize: "cover",
            backgroundRepeat: "no-repeat",
          }}
-          className='relative w-screen h-[150vh] px-[10%]'>
+          className='relative w-screen h-[190vh] px-[10%]'>
  
           {/* part 1 navigation*/}
            <nav className='w-full h-[10vh] flex gap-10 items-center text-lg text-zinc-100'>
@@ -38,7 +39,7 @@ const TvDetails = () => {
            <a target='_blank' href={`https://www.imdb.com/title/${info.externalid.imdb_id}/`}>IMDB</a>
            </nav>
  
-          {/* part 2 poster and MovieDetails */}
+          {/* part 2 poster and tvDetails */}
           <div className='w-full flex'>
           <img
              className='h-[60vh]  object-cover rounded-t-lg shadow-[8px_17px_38px_2px_rgba(0,0,0,0.5)]'
@@ -59,7 +60,7 @@ const TvDetails = () => {
                <h1 className='text-xl w-[60px] font-semibold leading-6'>user score</h1>
                <h1>{info.detail.release_date}</h1>
                <h1>{info.detail.genres.map((g)=>g.name).join(",")}</h1>
-               <h1>{info.detail.runtime}min</h1>
+              
  
              </div>
  
@@ -68,7 +69,7 @@ const TvDetails = () => {
             <h1 className='text-xl mt-5 mb-3'>Overview</h1>
             <p className='text-sm'>{info.detail.overview}</p>
  
-            <h1 className='text-xl mt-5 mb-3'>Movie Translated</h1>
+            <h1 className='text-xl mt-5 mb-3'>tv Translated</h1>
             <p className='mb-5 text-sm'>{info.translations.join(", ")}</p>
  
             <Link
@@ -89,8 +90,9 @@ const TvDetails = () => {
                    <h1>
                    Available on Platform    :
                    </h1>
-                          {info.watchprovider.flatrate.map((w)=>(
+                          {info.watchprovider.flatrate.map((w,i)=>(
                  <img 
+                 key={i}
                  title={w.provider_name}
                  className='w-[5vh] h-[5vh] object-cover rounded-md '
                  src={`https://image.tmdb.org/t/p/original${w.logo_path}`}
@@ -133,8 +135,31 @@ const TvDetails = () => {
                    
                  </div>)}
             </div>
+
+              {/*part 4 season */}
  
-              {/*part 4 similar movie and recommdations */}
+              <hr className='mt-10 mb-5 border-none h-[2px] bg-zinc-500'/>
+<h1 className='text-3xl font-bold text-white'>seasons</h1>
+<div className='w-[100%] flex overflow-y-hidden mb-5 p-5'>
+  {info.detail.seasons.map((s, i) => (
+    <div className='w-[15vh] mr-[7%]' key={s.season_number}>
+      <img
+        className='shadow-[8px_17px_38px_2px_rgba(0,0,0,.5)] min-w-[12vw] h-[30vh] object-cover'
+        src={s.poster_path?`https://image.tmdb.org/t/p/original/${s.poster_path }` : noimage}
+        alt={`${s.name} poster`} 
+      />
+
+      <div className='text-white text-sm font-bold'>
+        <h1>{s.name}</h1>
+        
+        <div to={`/tv/${info.detail.id}/season/${s.season_number}`}>Watch</div>
+      </div>
+    </div>
+  ))}
+</div>
+
+ 
+              {/*part 5 similar tv and recommdations */}
  
               <hr className='mt-5 mb-5 border-none h-[1px] bg-zinc-400'/>
  
@@ -146,6 +171,6 @@ const TvDetails = () => {
    
     </>
    ) :<div> <Loading/></div>
- }
+}
 
 export default TvDetails

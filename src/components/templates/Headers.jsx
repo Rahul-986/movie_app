@@ -29,7 +29,7 @@ const Headers = ({ data }) => {
             {data.media_type ? data.media_type.toUpperCase() : ''}
           </div>
           <Link
-            to='#'
+            to={`/${data.media_type}/details/${data.id}/trailer`}
             className='bg-[#6556CD] hover:bg-[#5545b8] text-white font-semibold py-2 px-4 rounded mt-5 inline-block transition duration-300 ease-in-out transform hover:scale-105'
           >
             Watch Trailer

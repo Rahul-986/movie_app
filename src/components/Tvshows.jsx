@@ -8,8 +8,8 @@ import TopNav from './templates/TopNav';
 import Loading from './templates/Loading';
 
 const Tvshows = () => {
-  document.title="movie app || Tvshows"
-  const nav = useNavigate();  
+  document.title = "movie app || Tvshows";
+  const nav = useNavigate();
   const [category, setCategory] = useState("airing_today");
   const [tv, setTv] = useState([]);
   const [page, setPage] = useState(1);
@@ -18,8 +18,7 @@ const Tvshows = () => {
   const getTv = async () => {
     try {
       const { data } = await axios.get(`/tv/${category}?page=${page}`);
-
-      if (data.results.length > 0) {
+      if (data.results && data.results.length > 0) {
         setTv((prevState) => [...prevState, ...data.results]);
         setPage((prevPage) => prevPage + 1);
       } else {
@@ -40,15 +39,16 @@ const Tvshows = () => {
   useEffect(() => {
     refreshHandler();
   }, [category]);
+
   return tv.length > 0 ? (
     <div className="w-screen h-screen">
       <div className="px-[3%] w-full flex items-center justify-between">
         <h1 className="text-zinc-400 font-semibold text-3xl">
           <i
-            onClick={() => nav(-1)}  // Correctly use useNavigate here
+            onClick={() => nav(-1)}
             className="hover:text-[#6556CD] ri-arrow-left-line"
           ></i>
-          TV Shows <small className='text-sm text-zinc-600'> ({category})</small>
+          TV Shows <small className="text-sm text-zinc-600">({category})</small>
         </h1>
         <div className="flex items-center w-[80%]">
           <TopNav />
@@ -64,7 +64,7 @@ const Tvshows = () => {
         dataLength={tv.length}
         next={getTv}
         hasMore={hasMore}
-        loader={<h1>loading...</h1>}
+        loader={<Loading />} // Use the Loading component here
       >
         <Cards data={tv} title="tv" /> {/* Correct data passed */}
       </InfiniteScroll>
@@ -74,4 +74,4 @@ const Tvshows = () => {
   );
 };
 
-export default Tvshows
+export default Tvshows;
