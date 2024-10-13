@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncloadperson, removeperson } from "../../store/actions/personsActions"
 import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import HorizontalCards from '../../components/templates/HorizontalCards';
+import DropDown from "./DropDown"
 import Loading from './Loading';
 
 const PersonDetails = () => {
@@ -11,6 +12,7 @@ const PersonDetails = () => {
   const {id} = useParams();
   const {info} =useSelector((state)=>state.person)
   const dispatch = useDispatch();
+  const [category,setcategory]=useState("movie")
   useEffect(()=>{
    dispatch(asyncloadperson(id))
    return ()=>{
@@ -18,16 +20,16 @@ const PersonDetails = () => {
    }
   },[id])
   return info ? (
-    <div className='px-[15%] w-screen '>
+    <div className='px-[15%] w-screen h-[150vh] bg-[#1F1E24] '>
       <nav className='w-full h-[10vh] flex items-center text-lg text-zinc-100'>
       <Link onClick={()=>nav(-1)} className=" hover:text-[#6556CD] ri-arrow-left-line -ml-[15%]"></Link>
 
 
        {/*part 2 left poster and details */}
-      <div className='w-full flex flex-col'>
+      <div className='w-full flex '>
         <div className='w-[20%] mt-[50%] ml-[5.5%]'>
           <img
-            className='mt-[45%] h-[40vh]  object-cover  shadow-[8px_17px_38px_2px_rgba(0,0,0,0.5)]'
+            className='mt-[100%] h-[40vh]  object-cover  shadow-[8px_17px_38px_2px_rgba(0,0,0,0.5)]'
             src={`https://image.tmdb.org/t/p/original${info.detail.poster_path || info.detail.profile_path}`}
             alt=""
           />
@@ -54,14 +56,27 @@ const PersonDetails = () => {
            <h1 className='text-zinc-400 text-sm mb-3 '>{info.detail.place_of_birth}</h1>
 
            <h1 className='text-zinc-400 text-sm font-semibold   '>Also known   </h1>
-           <h1 className='text-zinc-400 text-sm  '>{info.detail.also_known_as[0]}</h1>
+           <h1 className='text-zinc-400 text-sm  '>{info.detail.also_known_as.join(",")}</h1>
 
      
         </div>
-            {/*part 3 right details and info*/}
-            <div className='w-[80%]'></div>
-
       </div>
+            {/*part 3 right details and info*/}
+            <div className='w-[80%] -ml-[73%] mt-[50%]  '>
+            <h1 className='text-zinc-300 font-black text-6xl my-3 '>{info.detail.name}</h1>
+            <h1 className='text-zinc-400 text-sm font-semibold mt-3 mb-3'>Biography </h1>
+            <h1 className='text-zinc-400 text-sm mb-3 '>{info.detail.biography}</h1>
+            <h1 className='text-zinc-400 text-sm mb-3 font-semibold '>Movies and TV shows</h1>
+            <HorizontalCards data={info.combinedCredits.cast} />
+            
+            <div className='w-full flex justify-between text-sm'>
+              <h1 className='mt-5 text-xl text-zinc-400 font-semibold'>Acting</h1>
+              <DropDown title="category" option={["tv","movie"]} func={(e)=>setcategory(e.target.value)}/>
+            </div>
+
+            </div>
+
+
       
 {   /*  
       <a target='_blank' href={info.detail.homepage}><i className="ri-external-link-fill"></i></a>
