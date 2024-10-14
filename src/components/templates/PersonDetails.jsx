@@ -20,13 +20,13 @@ const PersonDetails = () => {
    }
   },[id])
   return info ? (
-    <div className='px-[15%] w-screen h-[150vh] bg-[#1F1E24] '>
+    <div className='px-[15%] w-screen h-[190vh] bg-[#1F1E24] overflow-y-clip overflow-x-hidden'>
       <nav className='w-full h-[10vh] flex items-center text-lg text-zinc-100'>
       <Link onClick={()=>nav(-1)} className=" hover:text-[#6556CD] ri-arrow-left-line -ml-[15%]"></Link>
 
 
        {/*part 2 left poster and details */}
-      <div className='w-full flex '>
+      <div className='w-full flex  '>
         <div className='w-[20%] mt-[50%] ml-[5.5%]'>
           <img
             className='mt-[100%] h-[40vh]  object-cover  shadow-[8px_17px_38px_2px_rgba(0,0,0,0.5)]'
@@ -62,7 +62,7 @@ const PersonDetails = () => {
         </div>
       </div>
             {/*part 3 right details and info*/}
-            <div className='w-[80%] -ml-[73%] mt-[50%]  '>
+            <div className='w-[80%] -ml-[73%] mt-auto  '>
             <h1 className='text-zinc-300 font-black text-6xl my-3 '>{info.detail.name}</h1>
             <h1 className='text-zinc-400 text-sm font-semibold mt-3 mb-3'>Biography </h1>
             <h1 className='text-zinc-400 text-sm mb-3 '>{info.detail.biography}</h1>
@@ -74,17 +74,35 @@ const PersonDetails = () => {
               <DropDown title="category" option={["tv","movie"]} func={(e)=>setcategory(e.target.value)}/>
             </div>
 
+            <div className=' list-disc text-zinc-400 w-full mt-5 h-[50vh] overflow-x-hidden overflow-y-auto shadow-xl shadow-[rgba(255,255,255,0.3)] border-2 border-zinc-700 p-5'>
+
+             {info[category+"Credits"].cast.map((c,i)=> (
+              <li className='hover:text-white text-sm cursor-pointer p-3 hover:bg-[#19191d]'>
+                <Link to={`/${category}/details/${c.id}`} className=''>
+                <span className='mt-2'>
+                  {c.name || c.title || c.original_title ||c.original_name}
+                  </span>
+                <span className='block ml-5 mt-2'>
+                  {c.character && ` character Name : ${c.character}`}
+                  </span>
+                </Link>
+              </li>
+            ))}
+
+             
+            </div>
+
             </div>
 
 
       
 {   /*  
       <a target='_blank' href={info.detail.homepage}><i className="ri-external-link-fill"></i></a>
-      <a target='_blank' href={`https://www.wikidata.org/wiki/${info.externalid.wikidata_id}`}><i className="ri-earth-fill"></i></a>
-      <a target='_blank' href={`https://www.imdb.com/title/${info.externalid.imdb_id}/`}>IMDB</a>
+      <a target='_blank' href={https://www.wikidata.org/wiki/${info.externalid.wikidata_id}}><i className="ri-earth-fill"></i></a>
+      <a target='_blank' href={https://www.imdb.com/title/${info.externalid.imdb_id}/}>IMDB</a>
       */}
-      </nav>
-
+     
+     </nav> 
     </div>
   ): <Loading />
 }
